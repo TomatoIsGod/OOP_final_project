@@ -9,7 +9,7 @@ public class BrowseGUI extends JFrame {
     private ArrayList<Task> taskList;
     private DefaultListModel<Task> listModel;
     private JList<Task> list;
-    private JButton addNewButton, editButton, deleteButton;
+    private JButton addNewButton, editButton, deleteButton, showDetailsButton;
 
     public BrowseGUI() {
         super("Task Manager");
@@ -20,24 +20,29 @@ public class BrowseGUI extends JFrame {
 
         setLayout(null);
         JScrollPane scrollPane = new JScrollPane(list);
-        scrollPane.setBounds(10, 10, 380, 200);
+        scrollPane.setBounds(10, 10, 570, 250);  // Adjusted for additional button
         add(scrollPane);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(null);
-        buttonPanel.setBounds(10, 220, 380, 70);
+        buttonPanel.setBounds(10, 270, 570, 100);  // Adjusted for additional button
 
         addNewButton = new JButton("Add New");
         addNewButton.setBounds(10, 5, 120, 30);
         buttonPanel.add(addNewButton);
 
         editButton = new JButton("Edit");
-        editButton.setBounds(135, 5, 100, 30);
+        editButton.setBounds(140, 5, 120, 30);
         buttonPanel.add(editButton);
 
         deleteButton = new JButton("Delete");
-        deleteButton.setBounds(240, 5, 120, 30);
+        deleteButton.setBounds(270, 5, 120, 30);
         buttonPanel.add(deleteButton);
+
+        showDetailsButton = new JButton("Show Details");
+        showDetailsButton.setBounds(400, 5, 150, 30);
+        buttonPanel.add(showDetailsButton);
+        showDetailsButton.addActionListener(e -> showTaskDetails());
 
         add(buttonPanel);
 
@@ -45,7 +50,7 @@ public class BrowseGUI extends JFrame {
         editButton.addActionListener(e -> openEditGUI());
         deleteButton.addActionListener(e -> deleteTasks());
 
-        setSize(400, 320);
+        setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -66,6 +71,21 @@ public class BrowseGUI extends JFrame {
         if (selectedTask != null) {
             taskList.remove(selectedTask);
             listModel.removeElement(selectedTask);
+        }
+    }
+
+    private void showTaskDetails() {
+        Task selectedTask = list.getSelectedValue();
+        if (selectedTask != null) {
+            JOptionPane.showMessageDialog(this,
+                "Title: " + selectedTask.getTitle() + "\nDescription: " + selectedTask.getDescription(),
+                "Task Details",
+                JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                "No task selected!",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
         }
     }
 
