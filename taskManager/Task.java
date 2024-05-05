@@ -1,12 +1,16 @@
 package taskManager;
 
+import java.time.LocalDate;
+
 public class Task {
     private String title;
     private String description;
+    private LocalDate deadline;
 
-    public Task(String title, String description) {
+    public Task(String title, String description, LocalDate deadline) {
         this.title = title;
         this.description = description;
+        this.deadline = deadline;
     }
 
     public String getTitle() {
@@ -25,9 +29,16 @@ public class Task {
         this.description = description;
     }
 
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
     @Override
     public String toString() {
-        return title + ": " + description;
+        return title + " - Due: " + deadline;
     }
 }
-
